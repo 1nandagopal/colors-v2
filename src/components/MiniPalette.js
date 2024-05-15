@@ -1,6 +1,7 @@
 import { Delete } from "@mui/icons-material";
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Root = styled.div({
@@ -72,7 +73,10 @@ function MiniPalette(props) {
     <MiniColorBox $color={color.color} />
   ));
 
-  const handleClick = () => {};
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/${props.id}`);
+  };
   const deletePalette = () => {};
 
   return (

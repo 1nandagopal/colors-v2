@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 import useToggleState from "../hooks/useToggleState";
+import { useSelector } from "react-redux";
+import MiniPalette from "./MiniPalette";
 
 const Root = styled.div({
   height: "100vh",
@@ -51,6 +53,9 @@ const Palettes = styled.div({
 
 function PaletteList() {
   const [openDeleteDialog, toggleDeleteDialog] = useToggleState(false);
+
+  const palettes = useSelector((state) => state.palettes);
+
   const handleClose = () => {
     toggleDeleteDialog();
   };
@@ -66,7 +71,11 @@ function PaletteList() {
           <H1>React Colors V2</H1>
           <a href="#">Create Palette</a>
         </Nav>
-        <Palettes>{/* Map palettes here */}</Palettes>
+        <Palettes>
+          {palettes.map((palette) => (
+            <MiniPalette id={palette.id} key={palette.id} />
+          ))}
+        </Palettes>
       </Container>
       <Dialog open={openDeleteDialog} onClose={handleClose}>
         <DialogTitle>Delete Palette</DialogTitle>

@@ -3,9 +3,7 @@ import seedColors from "../seedColors";
 
 const palettesSlice = createSlice({
   name: "palettes",
-  initialState: {
-    palettes: JSON.parse(localStorage.getItem("palettes")) || seedColors,
-  },
+  initialState: JSON.parse(localStorage.getItem("colors-v2")) || seedColors,
   reducers: {
     addPalette(state, action) {
       state.palettes.push(action.payload);

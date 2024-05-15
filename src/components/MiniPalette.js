@@ -70,7 +70,7 @@ function MiniPalette(props) {
   );
 
   const miniColorBoxes = palette.colors.map((color) => (
-    <MiniColorBox $color={color.color} />
+    <MiniColorBox key={color.name} $color={color.color} />
   ));
 
   const navigate = useNavigate();

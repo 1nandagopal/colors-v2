@@ -133,7 +133,6 @@ const SeeMore = styled.span((props) => ({
 }));
 
 function ColorBox({ background, name, moreUrl, showingFullPalette }) {
-  console.log(showingFullPalette);
   const [copyOverlay, setCopyOverlay] = useToggleState(false);
 
   const triggerCopyOverlay = () => {
@@ -141,7 +140,6 @@ function ColorBox({ background, name, moreUrl, showingFullPalette }) {
   };
 
   useEffect(() => {
-    console.log("use effect");
     let timerId;
     if (copyOverlay)
       timerId = setTimeout(() => {

@@ -1,5 +1,5 @@
-import { Delete } from "@mui/icons-material";
 import React from "react";
+import { Delete } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -77,7 +77,10 @@ function MiniPalette(props) {
   const handleClick = () => {
     navigate(`/${props.id}`);
   };
-  const deletePalette = () => {};
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    props.openDeleteDialog(props.id);
+  };
 
   return (
     <Root onClick={handleClick}>
@@ -85,7 +88,7 @@ function MiniPalette(props) {
         style={{
           transition: "opacity 0.3s ease-in-out",
         }}
-        onClick={deletePalette}
+        onClick={handleDelete}
       />
       <Colors>{miniColorBoxes}</Colors>
       <Title>

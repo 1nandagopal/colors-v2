@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Dialog,
@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 import useToggleState from "../hooks/useToggleState";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MiniPalette from "./MiniPalette";
+import { deletePalette } from "../store";
 
 const Root = styled.div({
   height: "100vh",
@@ -52,18 +53,27 @@ const Palettes = styled.div({
 });
 
 function PaletteList() {
-  const [isDeleteDialogOpen, toggleDeleteDialog] = useToggleState(false);
+  const [isDeleteDialogOpen, toggleDeleteDialog] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+
+  const dispatch = useDispatch();
 
   const palettes = useSelector((state) => state.palettes);
 
   const handleClose = () => {
-    toggleDeleteDialog();
-  };
-  const handleDelete = () => {
-    toggleDeleteDialog();
-    // delete palette
+    toggleDeleteDialog(false);
   };
 
+  const openDeleteDialog = (id) => {
+    toggleDeleteDialog(true);
+    setDeleteId(id);
+  };
+
+  const handleDelete = () => {
+    dispatch(deletePalette(deleteId));
+    setDeleteId("");
+    toggleDeleteDialog(false);
+  };
   return (
     <Root>
       <Container>
@@ -73,7 +83,11 @@ function PaletteList() {
         </Nav>
         <Palettes>
           {palettes.map((palette) => (
-            <MiniPalette id={palette.id} key={palette.id} />
+            <MiniPalette
+              id={palette.id}
+              key={palette.id}
+              openDeleteDialog={openDeleteDialog}
+            />
           ))}
         </Palettes>
       </Container>

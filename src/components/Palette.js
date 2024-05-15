@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Navbar from "./Navbar";
 import { useSelector } from "react-redux";
 import PaletteFooter from "./PaletteFooter";
+import { generatePalette } from "../colorHelpers";
+import ColorBox from "./ColorBox";
 
 const Root = styled.div({
   height: "100vh",
@@ -81,7 +83,18 @@ function Palette() {
     state.palettes.find((palette) => palette.id === paletteId)
   );
 
-  console.log(palette);
+  console.log(generatePalette(palette));
+
+  const colorBoxes = generatePalette(palette).colors[colorLevel].map(
+    (color) => (
+      <ColorBox
+        background={color[colorFormat]}
+        name={color.name}
+        key={color.id}
+        moreUrl={`/palette/${paletteId}/${color.id}`}
+      />
+    )
+  );
 
   return (
     <Root>
@@ -92,26 +105,10 @@ function Palette() {
         updateColorFormat={updateColorFormat}
         showingAllColors
       />
-      <Colors>{/* {colorBoxes} */}</Colors>
+      <Colors>{colorBoxes}</Colors>
       <PaletteFooter paletteName={palette.paletteName} emoji={palette.emoji} />
     </Root>
   );
 }
 
 export default Palette;
-
-// class Palette extends Component {
-//   render() {
-//     const { colors, paletteName, emoji, id } = this.props.palette;
-//     const { level, format } = this.state;
-//     const colorBoxes = colors[level].map(color => (
-//       <ColorBox
-//         background={color[format]}
-//         name={color.name}
-//         key={color.id}
-//         moreUrl={`/palette/${id}/${color.id}`}
-//         showingFullPalette
-//       />
-//     ));
-//   }
-// }

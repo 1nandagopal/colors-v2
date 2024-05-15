@@ -52,7 +52,7 @@ const Palettes = styled.div({
 });
 
 function PaletteList() {
-  const [openDeleteDialog, toggleDeleteDialog] = useToggleState(false);
+  const [isDeleteDialogOpen, toggleDeleteDialog] = useToggleState(false);
 
   const palettes = useSelector((state) => state.palettes);
 
@@ -77,7 +77,7 @@ function PaletteList() {
           ))}
         </Palettes>
       </Container>
-      <Dialog open={openDeleteDialog} onClose={handleClose}>
+      <Dialog open={isDeleteDialogOpen} onClose={handleClose}>
         <DialogTitle>Delete Palette</DialogTitle>
         <DialogContent>
           <DialogContentText>

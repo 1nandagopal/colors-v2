@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Root = styled.div((props) => ({
   width: "20%",
-  height: "25%",
+  height: props.$showingFullPalette ? "25%" : "50%",
   margin: "0 auto",
   display: "inline-block",
   position: "relative",
@@ -132,7 +132,8 @@ const SeeMore = styled.span((props) => ({
   textTransform: "uppercase",
 }));
 
-function ColorBox({ background, name, moreUrl }) {
+function ColorBox({ background, name, moreUrl, showingFullPalette }) {
+  console.log(showingFullPalette);
   const [copyOverlay, setCopyOverlay] = useToggleState(false);
 
   const triggerCopyOverlay = () => {
@@ -153,7 +154,7 @@ function ColorBox({ background, name, moreUrl }) {
 
   return (
     <CopyToClipboard text={background} onCopy={triggerCopyOverlay}>
-      <Root $background={background}>
+      <Root $background={background} $showingFullPalette={showingFullPalette}>
         <CopyOverlay $background={background} $copyOverlay={copyOverlay} />
         <CopyMessage $copyOverlay={copyOverlay}>
           <h1>COPIED!</h1>

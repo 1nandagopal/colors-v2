@@ -24,7 +24,7 @@ const H1 = styled.h1({
 });
 
 const Container = styled.div({
-  width: "50%",
+  width: "75%",
   display: "flex",
   alignItems: "flex-start",
   flexDirection: "column",

@@ -36,8 +36,10 @@ const Container = styled("div")({
 
 const Buttons = styled("div")({
   width: "100%",
+  display: "flex",
+  justifyContent: "space-between",
 });
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -77,6 +79,7 @@ const AppBar = styled(MuiAppBar, {
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
+  width: "100%",
   alignItems: "center",
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
@@ -130,8 +133,11 @@ export default function NewPalette() {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
+          height: "100vh",
           "& .MuiDrawer-paper": {
             width: drawerWidth,
+            display: "flex",
+            alignItems: "center",
             boxSizing: "border-box",
           },
         }}
@@ -148,18 +154,17 @@ export default function NewPalette() {
             )}
           </IconButton>
         </DrawerHeader>
-        <Divider />
         <Container>
           <Typography variant="h5" gutterBottom>
-            Design your palette
+            Choose Custom Color
           </Typography>
           <Buttons>
             <Button
               sx={{
-                width: "50%",
+                width: "45%",
               }}
-              variant="contained"
-              color="secondary"
+              variant="outlined"
+              color="error"
               // onClick={this.clearColours}
             >
               Clear Palette

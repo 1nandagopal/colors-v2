@@ -3,23 +3,13 @@ import { Button, TextField } from "@mui/material";
 import { ChromePicker } from "react-color";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 
-const temp = {
-  picker: {
-    width: "100% !important",
-    marginTop: "2rem",
-  },
-  addColour: {
-    width: "100%",
-    padding: "1rem",
-    marginTop: "1rem",
-    fontSize: "2rem",
-  },
-  colourNameInput: {
-    width: "100%",
-    height: "70px",
-  },
-};
+const StyledChromePicker = styled(ChromePicker)({
+  width: "100% !important",
+  marginTop: "2rem",
+  marginBottom: "1rem",
+});
 
 function ColorPickerForm({ isPaletteFull }) {
   const {
@@ -49,7 +39,7 @@ function ColorPickerForm({ isPaletteFull }) {
             },
           }}
           render={({ field }) => (
-            <ChromePicker
+            <StyledChromePicker
               color={field.value}
               onChange={(color) => field.onChange(color.hex)}
             />
@@ -73,13 +63,19 @@ function ColorPickerForm({ isPaletteFull }) {
           helperText={
             errors.currentColor?.message || errors.currentColorName?.message
           }
+          fullWidth
+          sx={{ height: "85px" }}
         />
         <Button
           variant="contained"
-          color="primary"
+          color="success"
           type="submit"
           disabled={isPaletteFull}
-          sx={{ bgcolor: watch("currentColor") }}
+          size="large"
+          fullWidth
+          sx={{
+            background: watch("currentColor") || "#9C27B0",
+          }}
         >
           Add Color
         </Button>

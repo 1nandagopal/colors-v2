@@ -20,7 +20,23 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import seedColors from "../seedColors";
 import DraggableColorBox from "./DraggableColorBox";
+import { useSelector } from "react-redux";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import ColorPickerForm from "./ColorPickerForm";
 
+const Container = styled("div")({
+  width: "90%",
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+const Buttons = styled("div")({
+  width: "100%",
+});
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -69,9 +85,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function NewPalette() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
-  const colors = seedColors[0].colors;
+  const colors = useSelector((state) => state.customPalette);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -81,10 +97,12 @@ export default function NewPalette() {
     setOpen(false);
   };
 
+  const isPaletteFull = false;
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} color="default">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -98,6 +116,14 @@ export default function NewPalette() {
           <Typography variant="h6" noWrap component="div">
             Create Custom Palette
           </Typography>
+          <Link to="/">
+            <Button color="inherit" variant="outlined" size="medium">
+              Go Back
+            </Button>
+          </Link>
+          <Button color="success" variant="contained" size="medium">
+            Save
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -123,11 +149,44 @@ export default function NewPalette() {
           </IconButton>
         </DrawerHeader>
         <Divider />
+        <Container>
+          <Typography variant="h5" gutterBottom>
+            Design your palette
+          </Typography>
+          <Buttons>
+            <Button
+              sx={{
+                width: "50%",
+              }}
+              variant="contained"
+              color="secondary"
+              // onClick={this.clearColours}
+            >
+              Clear Palette
+            </Button>
+            <Button
+              sx={{
+                width: "50%",
+              }}
+              variant="contained"
+              color="primary"
+              // onClick={this.addRandomColour}
+              // disabled={isPaletteFull}
+            >
+              Random Colour
+            </Button>
+          </Buttons>
+          <ColorPickerForm isPaletteFull={isPaletteFull} />
+        </Container>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
         {colors.map((color) => (
-          <DraggableColorBox name={color.name} color={color.color} />
+          <DraggableColorBox
+            name={color.name}
+            color={color.color}
+            key={color.name}
+          />
         ))}
       </Main>
     </Box>

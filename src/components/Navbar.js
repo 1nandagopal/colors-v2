@@ -1,8 +1,7 @@
 import { MenuItem, Select, Slider, Snackbar } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import useToggleState from "../hooks/useToggleState";
 
 const Header = styled.header({
   display: "flex",
@@ -27,8 +26,9 @@ const Logo = styled.div({
 });
 
 const SliderContainer = styled.div({
-  width: "340px",
+  width: "350px",
   margin: "0 10px",
+  paddingTop: "3px",
   display: "inline-block",
 });
 
@@ -43,7 +43,7 @@ function Navbar({
   colorFormat,
   updateColorFormat,
 }) {
-  const [isSnackbarOpen, toggleSnackbar] = useToggleState(false);
+  const [isSnackbarOpen, toggleSnackbar] = useState(false);
 
   const handleSnackbarClose = () => {
     toggleSnackbar(false);
@@ -61,7 +61,7 @@ function Navbar({
   return (
     <Header>
       <Logo>
-        <Link to="/">reactcolorpicker</Link>
+        <Link to="/">reactcolors-v2</Link>
       </Logo>
       {colorLevel && (
         <>
@@ -80,7 +80,7 @@ function Navbar({
         </>
       )}
       <SelectContainer>
-        <Select value={colorFormat} onChange={handleSelectChange}>
+        <Select value={colorFormat} onChange={handleSelectChange} size="small">
           <MenuItem value="hex">HEX</MenuItem>
           <MenuItem value="rgb">RGB</MenuItem>
           <MenuItem value="rgba">RGBA</MenuItem>

@@ -8,10 +8,10 @@ import {
   DialogTitle,
 } from "@mui/material";
 import styled from "styled-components";
-import useToggleState from "../hooks/useToggleState";
 import { useDispatch, useSelector } from "react-redux";
 import MiniPalette from "./MiniPalette";
 import { deletePalette } from "../store";
+import { Link } from "react-router-dom";
 
 const Root = styled.div({
   height: "100vh",
@@ -74,12 +74,13 @@ function PaletteList() {
     setDeleteId("");
     toggleDeleteDialog(false);
   };
+
   return (
     <Root>
       <Container>
         <Nav>
           <H1>React Colors V2</H1>
-          <a href="#">Create Palette</a>
+          <Link to="/new">Create Palette</Link>
         </Nav>
         <Palettes>
           {palettes.map((palette) => (
@@ -95,12 +96,16 @@ function PaletteList() {
         <DialogTitle>Delete Palette</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete palette?
+            Are you sure you want to delete{" "}
+            {palettes.find((palette) => palette.id === deleteId)?.paletteName}{" "}
+            palette?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDelete}>Delete</Button>
+          <Button color="error" onClick={handleDelete}>
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
     </Root>

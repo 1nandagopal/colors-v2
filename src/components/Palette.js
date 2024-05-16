@@ -11,6 +11,7 @@ const Root = styled.div({
   height: "100vh",
   display: "flex",
   flexDirection: "column",
+  overflow: "hidden",
 });
 
 const Colors = styled.div({
@@ -38,10 +39,10 @@ function Palette() {
   const colorBoxes = generatePalette(palette).colors[colorLevel].map(
     (color) => (
       <ColorBox
-        background={color[colorFormat]}
         name={color.name}
-        showingFullPalette={true}
+        color={color[colorFormat]}
         moreUrl={`/${paletteId}/${color.id}`}
+        showingFullPalette={true}
         key={color.id}
       />
     )

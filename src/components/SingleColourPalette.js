@@ -11,6 +11,7 @@ const Root = styled.div({
   height: "100vh",
   display: "flex",
   flexDirection: "column",
+  overflow: "hidden",
 });
 
 const Colors = styled.div({
@@ -60,7 +61,7 @@ function SingleColourPalette() {
   const colorBoxes = shades.map((color) => (
     <ColorBox
       name={color.name}
-      background={color[colorFormat]}
+      color={color[colorFormat]}
       showingFullPalette={false}
       key={color.name}
     />
@@ -69,13 +70,10 @@ function SingleColourPalette() {
   const updateColorFormat = (newValue) => {
     setColorFormat(newValue);
   };
+
   return (
     <Root>
-      <Navbar
-        colorFormat={colorFormat}
-        updateColorFormat={updateColorFormat}
-        level={false}
-      />
+      <Navbar colorFormat={colorFormat} updateColorFormat={updateColorFormat} />
       <Colors>
         {colorBoxes}
         <GoBack>

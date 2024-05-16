@@ -12,11 +12,68 @@ const Root = styled.div((props) => ({
   display: "inline-block",
   position: "relative",
   cursor: "pointer",
-  marginBottom: "-3.5px",
-  background: props.$background,
+  marginBottom: "-4px",
+  background: props.$color,
   "&:hover button": {
     opacity: 1,
   },
+}));
+
+const BoxContent = styled.div({
+  position: "absolute",
+  width: "100%",
+  left: "0px",
+  bottom: "0px",
+  padding: "10px",
+  color: "black",
+  letterSpacing: "1px",
+  textTransform: "uppercase",
+  fontSize: "12px",
+  boxSizing: "border-box",
+});
+
+const CopyButton = styled.button((props) => ({
+  color: chroma(props.$color).luminance() >= 0.7 ? "rgba(0,0,0,0.6)" : "white",
+  width: "100px",
+  height: "30px",
+  position: "absolute",
+  display: "inline-block",
+  top: "50%",
+  left: "50%",
+  marginLeft: "-50px",
+  marginTop: "-15px",
+  textAlign: "center",
+  outline: "none",
+  background: "rgba(255, 255, 255, 0.3)",
+  fontSize: "1rem",
+  lineHeight: "30px",
+  textTransform: "uppercase",
+  border: "none",
+  textDecoration: "none",
+  opacity: 0,
+  cursor: "pointer",
+}));
+
+const ColorName = styled.span((props) => ({
+  color: chroma(props.$color).luminance() <= 0.25 ? "white" : "black",
+}));
+
+const SeeMore = styled.span((props) => ({
+  color: chroma(props.$color).luminance() >= 0.5 ? "rgba(0,0,0,0.6)" : "white",
+  background: "rgba(255, 255, 255, 0.3)",
+  position: "absolute",
+  border: "none",
+  right: "0px",
+  bottom: "0px",
+  width: "60px",
+  height: "30px",
+  textAlign: "center",
+  lineHeight: "30px",
+  textTransform: "uppercase",
+}));
+
+const CopyText = styled.div((props) => ({
+  color: chroma(props.$color).luminance() >= 0.7 ? "black" : "white",
 }));
 
 const CopyOverlay = styled.div((props) => ({
@@ -24,9 +81,9 @@ const CopyOverlay = styled.div((props) => ({
   zIndex: "0",
   width: "100%",
   height: "100%",
-  transition: "transform 0.6s ease-in-out",
+  transition: "transform 0.8s ease-in",
   transform: "scale(0.1)",
-  background: props.$background,
+  background: props.$color,
 
   ...(props.$copyOverlay && {
     opacity: "1",
@@ -69,104 +126,46 @@ const CopyMessage = styled.div((props) => ({
     opacity: "1",
     transform: "scale(1)",
     zIndex: "25",
-    transition: "all 0.4s ease-in-out",
+    transition: "all 0.4s ease-in",
     transitionDelay: "0.3s",
   }),
 }));
 
-const CopyText = styled.div((props) => ({
-  color: chroma(props.$background).luminance() >= 0.7 ? "black" : "white",
-}));
-
-const BoxContent = styled.div({
-  position: "absolute",
-  width: "100%",
-  left: "0px",
-  bottom: "0px",
-  padding: "10px",
-  color: "black",
-  letterSpacing: "1px",
-  textTransform: "uppercase",
-  fontSize: "12px",
-  boxSizing: "border-box",
-});
-
-const ColorName = styled.span((props) => ({
-  color: chroma(props.$background).luminance() <= 0.25 ? "white" : "black",
-}));
-
-const CopyButton = styled.button((props) => ({
-  color:
-    chroma(props.$background).luminance() >= 0.7 ? "rgba(0,0,0,0.6)" : "white",
-  width: "100px",
-  height: "30px",
-  position: "absolute",
-  display: "inline-block",
-  top: "50%",
-  left: "50%",
-  marginLeft: "-50px",
-  marginTop: "-15px",
-  textAlign: "center",
-  outline: "none",
-  background: "rgba(255, 255, 255, 0.3)",
-  fontSize: "1rem",
-  lineHeight: "30px",
-  textTransform: "uppercase",
-  border: "none",
-  textDecoration: "none",
-  opacity: 0,
-}));
-
-const SeeMore = styled.span((props) => ({
-  color:
-    chroma(props.$background).luminance() >= 0.7 ? "rgba(0,0,0,0.6)" : "white",
-  background: "rgba(255, 255, 255, 0.3)",
-  position: "absolute",
-  border: "none",
-  right: "0px",
-  bottom: "0px",
-  width: "60px",
-  height: "30px",
-  textAlign: "center",
-  lineHeight: "30px",
-  textTransform: "uppercase",
-}));
-
-function ColorBox({ background, name, moreUrl, showingFullPalette }) {
-  const [copyOverlay, setCopyOverlay] = useToggleState(false);
+function ColorBox({ color, name, moreUrl, showingFullPalette }) {
+  const [copyOverlay, toggleCopyOverlay] = useToggleState(false);
 
   const triggerCopyOverlay = () => {
-    setCopyOverlay(true);
+    toggleCopyOverlay();
   };
 
   useEffect(() => {
     let timerId;
     if (copyOverlay)
       timerId = setTimeout(() => {
-        setCopyOverlay(false);
-      }, 1500);
+        toggleCopyOverlay();
+      }, 1300);
     return () => {
       clearTimeout(timerId);
     };
   }, [copyOverlay]);
 
   return (
-    <CopyToClipboard text={background} onCopy={triggerCopyOverlay}>
-      <Root $background={background} $showingFullPalette={showingFullPalette}>
-        <CopyOverlay $background={background} $copyOverlay={copyOverlay} />
+    <CopyToClipboard text={color} onCopy={triggerCopyOverlay}>
+      <Root $color={color} $showingFullPalette={showingFullPalette}>
+        <CopyOverlay $color={color} $copyOverlay={copyOverlay} />
         <CopyMessage $copyOverlay={copyOverlay}>
           <h1>COPIED!</h1>
-          <CopyText $background={background}>{background}</CopyText>
+          <CopyText $color={color}>{color}</CopyText>
         </CopyMessage>
-        <div>
-          <BoxContent>
-            <ColorName $background={background}>{name}</ColorName>
-          </BoxContent>
-          <CopyButton $background={background}>Copy</CopyButton>
-        </div>
-        <Link to={moreUrl} onClick={(e) => e.stopPropagation()}>
-          <SeeMore $background={background}>MORE</SeeMore>
-        </Link>
+        <BoxContent>
+          <ColorName $color={color}>{name}</ColorName>
+          {showingFullPalette && (
+            <Link to={moreUrl} onClick={(e) => e.stopPropagation()}>
+              <SeeMore $color={color}>MORE</SeeMore>
+            </Link>
+          )}
+        </BoxContent>
+        <CopyButton $color={color}>Copy</CopyButton>
       </Root>
     </CopyToClipboard>
   );

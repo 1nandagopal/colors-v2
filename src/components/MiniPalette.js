@@ -86,7 +86,7 @@ function MiniPalette(props) {
     <Root onClick={handleClick}>
       <DeleteIcon
         style={{
-          transition: "opacity 0.3s ease-in-out",
+          transition: "opacity 0.25s ease-in-out",
         }}
         onClick={handleDelete}
       />

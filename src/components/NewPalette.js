@@ -19,6 +19,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import seedColors from "../seedColors";
+import DraggableColorBox from "./DraggableColorBox";
 
 const drawerWidth = 240;
 
@@ -125,6 +126,9 @@ export default function NewPalette() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
+        {colors.map((color) => (
+          <DraggableColorBox name={color.name} color={color.color} />
+        ))}
       </Main>
     </Box>
   );

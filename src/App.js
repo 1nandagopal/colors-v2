@@ -13,7 +13,6 @@ function App() {
       <Route path="/:paletteId" element={<Palette />} />
       <Route path="/:paletteId/:colorId" element={<SingleColourPalette />} />
       <Route path="/new" element={<NewPalette />} />
-      <Route path="/test" element={<Test />} />
     </Routes>
   );
 }

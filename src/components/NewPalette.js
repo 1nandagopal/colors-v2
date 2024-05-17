@@ -16,7 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import { addColor, clearPalette } from "../store";
 import ColorPickerForm from "./ColorPickerForm";
-import DnDColors from "./DnDColorsList";
+import DnDColorsList from "./DnDColorsList";
 
 const Container = styled("div")({
   width: "90%",
@@ -193,7 +193,7 @@ export default function NewPalette({ maxColors = 20 }) {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <DnDColors />
+        <DnDColorsList />
       </Main>
     </Box>
   );

@@ -5,16 +5,21 @@ import { Delete } from "@mui/icons-material";
 import { styled } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { removeColor } from "../store";
+import chroma from "chroma-js";
 
 const Root = styled("div")((props) => ({
   position: "relative",
-  cursor: "move",
+  cursor: props.isDragging ? "grabbing" : "move",
   backgroundColor: props.$color,
+  opacity: props.isDragging ? "0.75" : "1",
+  boxShadow: props.isDragging
+    ? "rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;"
+    : "none",
+  zIndex: props.isDragging ? "10" : "0",
   "&:hover svg": {
     color: "white",
     transform: "scale(1.5)",
   },
-  // cursor:
 }));
 
 const BoxContent = styled("div")((props) => ({
@@ -23,10 +28,10 @@ const BoxContent = styled("div")((props) => ({
   left: "0px",
   bottom: "0px",
   padding: "10px",
-  // color:
-  //   chroma(props.$color).luminance() <= 0.1
-  //     ? "rgba(255,255,255,0.8)"
-  //     : "rgba(0,0,0,0.6)",
+  color:
+    chroma(props.$color).luminance() <= 0.1
+      ? "rgba(255,255,255,0.8)"
+      : "rgba(0,0,0,0.6)",
   letterSpacing: "1px",
   textTransform: "uppercase",
   fontSize: "12px",
@@ -66,9 +71,10 @@ export default function DnDColorBox({ name, color }) {
       {...attributes}
       {...listeners}
       $color={color}
+      isDragging={isDragging}
       style={style}
     >
-      <BoxContent>
+      <BoxContent $color={color}>
         <span>{name}</span>
         <DeleteIcon onClick={handleDelete} />
       </BoxContent>

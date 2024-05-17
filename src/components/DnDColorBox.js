@@ -3,6 +3,8 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Delete } from "@mui/icons-material";
 import { styled } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { removeColor } from "../store";
 
 const Root = styled("div")((props) => ({
   position: "relative",
@@ -38,6 +40,8 @@ const DeleteIcon = styled(Delete)({
 });
 
 export default function DnDColorBox({ name, color }) {
+  const dispatch = useDispatch();
+
   const {
     attributes,
     listeners,
@@ -52,6 +56,10 @@ export default function DnDColorBox({ name, color }) {
     transition: transition || undefined,
   };
 
+  const handleDelete = () => {
+    dispatch(removeColor(name));
+  };
+
   return (
     <Root
       ref={setNodeRef}
@@ -62,7 +70,7 @@ export default function DnDColorBox({ name, color }) {
     >
       <BoxContent>
         <span>{name}</span>
-        <DeleteIcon />
+        <DeleteIcon onClick={handleDelete} />
       </BoxContent>
     </Root>
   );

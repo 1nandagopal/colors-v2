@@ -23,7 +23,11 @@ const Grid = styled.div({
 export default function DnDColorsList() {
   const colors = useSelector((state) => state.customPalette);
   const dispatch = useDispatch();
-  const sensors = useSensors(useSensor(MouseSensor));
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: { distance: 7 },
+    })
+  );
 
   const handleDragEnd = (event) => {
     const { active, over } = event;

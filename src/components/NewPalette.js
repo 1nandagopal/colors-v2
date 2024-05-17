@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -16,7 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import { addColor, clearPalette } from "../store";
 import ColorPickerForm from "./ColorPickerForm";
-import DraggableColorBox from "./DraggableColorBox";
+import DnDColors from "./DnDColorsList";
 
 const Container = styled("div")({
   width: "90%",
@@ -37,7 +37,8 @@ const drawerWidth = 300;
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
+    height: "calc(100vh - 64px)",
+    padding: 0,
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -56,6 +57,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
+  height: "64px",
   transition: theme.transitions.create(["margin", "width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -80,7 +82,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function NewPalette({ maxColors = 20 }) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(false);
 
   const colors = useSelector((state) => state.customPalette);
   const allPalettes = useSelector((state) => state.palettes);
@@ -191,13 +193,7 @@ export default function NewPalette({ maxColors = 20 }) {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        {colors.map((color) => (
-          <DraggableColorBox
-            name={color.name}
-            color={color.color}
-            key={color.name}
-          />
-        ))}
+        <DnDColors />
       </Main>
     </Box>
   );

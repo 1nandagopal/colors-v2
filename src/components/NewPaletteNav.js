@@ -12,6 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MuiAppBar from "@mui/material/AppBar";
 import { Link } from "react-router-dom";
 import { DEFAULT_WIDTH } from "../colorHelpers";
+import NewPaletteFormDialog from "./NewPaletteFormDialog";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -48,6 +49,13 @@ const NavButtons = styled("div")({
 export default function NewPaletteNav({ open, handleDrawerOpen }) {
   const [newPaletteFormOpen, toggleNewPaletteForm] = useState(false);
 
+  const openNewPaletteForm = () => {
+    toggleNewPaletteForm(true);
+  };
+  const closeNewPaletteForm = () => {
+    toggleNewPaletteForm(false);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -72,11 +80,22 @@ export default function NewPaletteNav({ open, handleDrawerOpen }) {
               Go Back
             </Button>
           </Link>
-          <Button color="success" variant="contained" size="medium">
+          <Button
+            color="success"
+            variant="contained"
+            size="medium"
+            onClick={openNewPaletteForm}
+          >
             Save palette
           </Button>
         </NavButtons>
       </AppBar>
+      {newPaletteFormOpen && (
+        <NewPaletteFormDialog
+          newPaletteFormOpen={newPaletteFormOpen}
+          closeNewPaletteForm={closeNewPaletteForm}
+        />
+      )}
     </Box>
   );
 }

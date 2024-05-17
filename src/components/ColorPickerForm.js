@@ -2,12 +2,13 @@ import React from "react";
 import { Button, TextField } from "@mui/material";
 import { ChromePicker } from "react-color";
 import { Controller, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { addColor } from "../store";
 
 const StyledChromePicker = styled(ChromePicker)({
   width: "100% !important",
-  marginTop: "2rem",
+  marginTop: "1.5rem",
   marginBottom: "1rem",
 });
 
@@ -18,11 +19,18 @@ function ColorPickerForm({ isPaletteFull }) {
     formState: { errors },
     watch,
     control,
+    reset,
   } = useForm();
 
   const colors = useSelector((state) => state.customPalette);
+  const dispatch = useDispatch();
 
-  const addNewColor = (data) => console.log(data);
+  const addNewColor = (data) => {
+    dispatch(
+      addColor({ name: data.currentColorName, color: data.currentColor })
+    );
+    reset({ currentColorName: "", currentColor: "#9C27B0" });
+  };
   return (
     <>
       <form onSubmit={handleSubmit(addNewColor)} noValidate>
@@ -33,15 +41,14 @@ function ColorPickerForm({ isPaletteFull }) {
           rules={{
             validate: {
               isColorUnique: (value) =>
-                colors.every(
-                  (color) => color.color.toLowerCase() !== value.toLowerCase()
-                ) || "Color Not Unique",
+                colors.every((color) => color.color !== value) ||
+                "Color Must be Unique",
             },
           }}
           render={({ field }) => (
             <StyledChromePicker
               color={field.value}
-              onChange={(color) => field.onChange(color.hex)}
+              onChange={(color) => field.onChange(color.hex.toUpperCase())}
             />
           )}
         />
@@ -52,7 +59,7 @@ function ColorPickerForm({ isPaletteFull }) {
               isColorNameUnique: (value) =>
                 colors.every(
                   (color) => color.name.toLowerCase() !== value.toLowerCase()
-                ) || "Color Not Name Unique",
+                ) || "Color Name Must be Unique",
             },
           })}
           variant="filled"

@@ -49,3 +49,4 @@ function gatherShades(palette, colorId) {
 }
 
 export { generatePalette, gatherShades };
+export const DEFAULT_WIDTH = 300;

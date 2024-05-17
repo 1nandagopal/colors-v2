@@ -1,22 +1,18 @@
 import React, { useState } from "react";
-import { styled } from "@mui/material/styles";
-import MuiAppBar from "@mui/material/AppBar";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useDispatch, useSelector } from "react-redux";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import {
   Box,
   Button,
   Drawer,
-  CssBaseline,
-  Toolbar,
   Typography,
   IconButton,
+  styled,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import { addColor, clearPalette } from "../store";
 import ColorPickerForm from "./ColorPickerForm";
 import DnDColorsList from "./DnDColorsList";
+import NewPaletteNav from "./NewPaletteNav";
 
 const Container = styled("div")({
   width: "90%",
@@ -32,6 +28,7 @@ const Buttons = styled("div")({
   display: "flex",
   justifyContent: "space-between",
 });
+
 const drawerWidth = 300;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -53,24 +50,6 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
     }),
   })
 );
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  height: "64px",
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -98,9 +77,11 @@ export default function NewPalette({ maxColors = 20 }) {
   };
 
   const dispatch = useDispatch();
+
   const handleClearPalette = () => {
     dispatch(clearPalette());
   };
+
   const addRandomColour = () => {
     const allColors = allPalettes.flatMap((palette) => palette.colors);
     let randColour, isDuplicateColour;
@@ -115,31 +96,10 @@ export default function NewPalette({ maxColors = 20 }) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open} color="default">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Create Custom Palette
-          </Typography>
-          <Link to="/">
-            <Button color="inherit" variant="outlined" size="medium">
-              Go Back
-            </Button>
-          </Link>
-          <Button color="success" variant="contained" size="medium">
-            Save
-          </Button>
-        </Toolbar>
-      </AppBar>
+      <NewPaletteNav open={open} handleDrawerOpen={handleDrawerOpen} />
+      {/* <PaletteFormNav
+          handleSubmit={this.handleSubmit}
+        /> */}
       <Drawer
         sx={{
           width: drawerWidth,

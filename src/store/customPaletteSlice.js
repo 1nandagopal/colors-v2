@@ -11,6 +11,9 @@ const customPaletteSlice = createSlice({
     removeColor(customPalette, action) {
       return customPalette.filter((color) => color.name !== action.payload);
     },
+    updatePalette(customPalette, action) {
+      return action.payload;
+    },
     clearPalette() {
       return [];
     },

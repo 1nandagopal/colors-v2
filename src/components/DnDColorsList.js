@@ -6,13 +6,15 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { useSelector } from "react-redux";
-import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
+import { useDispatch, useSelector } from "react-redux";
+import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import styled from "styled-components";
 import DnDColorBox from "./DnDColorBox";
+import { updatePalette } from "../store";
 
 const Grid = styled.div({
   height: "100%",
+  overflow: "hidden",
   display: "grid",
   gridTemplateColumns: "repeat(5, 1fr)",
   gridTemplateRows: "repeat(4, 1fr)",
@@ -20,10 +22,17 @@ const Grid = styled.div({
 
 export default function DnDColorsList() {
   const colors = useSelector((state) => state.customPalette);
+  const dispatch = useDispatch();
   const sensors = useSensors(useSensor(MouseSensor));
 
-  const handleDragEnd = () => {
-    console.log("drag end");
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      const oldIndex = colors.findIndex((color) => color.name === active.id);
+      const newIndex = colors.findIndex((color) => color.name === over.id);
+      dispatch(updatePalette(arrayMove(colors, oldIndex, newIndex)));
+    }
   };
   return (
     <>

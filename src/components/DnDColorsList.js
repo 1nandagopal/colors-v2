@@ -28,12 +28,13 @@ export default function DnDColorsList() {
   const handleDragEnd = (event) => {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
+    if (over && active.id !== over?.id) {
       const oldIndex = colors.findIndex((color) => color.name === active.id);
       const newIndex = colors.findIndex((color) => color.name === over.id);
       dispatch(updatePalette(arrayMove(colors, oldIndex, newIndex)));
     }
   };
+
   return (
     <>
       <DndContext

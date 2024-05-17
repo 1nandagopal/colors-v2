@@ -1,29 +1,22 @@
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
+import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import seedColors from "../seedColors";
-import DraggableColorBox from "./DraggableColorBox";
-import { useSelector } from "react-redux";
-import { Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Box,
+  Button,
+  Drawer,
+  CssBaseline,
+  Toolbar,
+  Typography,
+  IconButton,
+} from "@mui/material";
 import { Link } from "react-router-dom";
+import { addColor, clearPalette } from "../store";
 import ColorPickerForm from "./ColorPickerForm";
+import DraggableColorBox from "./DraggableColorBox";
 
 const Container = styled("div")({
   width: "90%",
@@ -86,11 +79,13 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export default function NewPalette() {
-  const theme = useTheme();
+export default function NewPalette({ maxColors = 20 }) {
   const [open, setOpen] = React.useState(true);
 
   const colors = useSelector((state) => state.customPalette);
+  const allPalettes = useSelector((state) => state.palettes);
+
+  const isPaletteFull = colors.length >= maxColors;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -100,7 +95,21 @@ export default function NewPalette() {
     setOpen(false);
   };
 
-  const isPaletteFull = false;
+  const dispatch = useDispatch();
+  const handleClearPalette = () => {
+    dispatch(clearPalette());
+  };
+  const addRandomColour = () => {
+    const allColors = allPalettes.flatMap((palette) => palette.colors);
+    let randColour, isDuplicateColour;
+    do {
+      randColour = allColors[Math.floor(Math.random() * allColors.length)];
+      isDuplicateColour = colors.some(
+        (color) => color.color === randColour.color
+      );
+    } while (isDuplicateColour);
+    dispatch(addColor(randColour));
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -147,11 +156,7 @@ export default function NewPalette() {
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
+            <ChevronLeftIcon />
           </IconButton>
         </DrawerHeader>
         <Container>
@@ -165,7 +170,7 @@ export default function NewPalette() {
               }}
               variant="outlined"
               color="error"
-              // onClick={this.clearColours}
+              onClick={handleClearPalette}
             >
               Clear Palette
             </Button>
@@ -175,8 +180,8 @@ export default function NewPalette() {
               }}
               variant="contained"
               color="primary"
-              // onClick={this.addRandomColour}
-              // disabled={isPaletteFull}
+              onClick={addRandomColour}
+              disabled={isPaletteFull}
             >
               Random Colour
             </Button>

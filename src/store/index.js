@@ -21,4 +21,5 @@ const store = configureStore({
 
 export { store };
 export const { addPalette, deletePalette } = palettesSlice.actions;
-export const { addColor, removeColor } = customPaletteSlice.actions;
+export const { addColor, removeColor, clearPalette } =
+  customPaletteSlice.actions;

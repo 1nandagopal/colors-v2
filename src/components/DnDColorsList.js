@@ -11,13 +11,22 @@ import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import DnDColorBox from "./DnDColorBox";
 import { updatePalette } from "../store";
 import { styled } from "@mui/material";
+import sizes from "./styles/sizes";
 
 const Grid = styled("div")({
   height: "100%",
   overflow: "hidden",
   display: "grid",
-  gridTemplateColumns: "repeat(5, 1fr)",
-  gridTemplateRows: "repeat(4, 1fr)",
+  gridTemplate: "repeat(4, 1fr) / repeat(5, 1fr)",
+  [sizes.down("lg")]: {
+    gridTemplate: "repeat(5, 1fr) / repeat(4, 1fr)",
+  },
+  [sizes.down("md")]: {
+    gridTemplate: "repeat(10, 1fr) / repeat(2, 1fr)",
+  },
+  [sizes.down("sm")]: {
+    gridTemplate: "repeat(20, 1fr) / 1fr",
+  },
 });
 
 export default function DnDColorsList() {

@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
 import chroma from "chroma-js";
+import sizes from "./sizes";
 
 export const Root = styled("div")(({ color, showingFullPalette }) => ({
   width: "20%",
@@ -12,6 +13,18 @@ export const Root = styled("div")(({ color, showingFullPalette }) => ({
   background: color,
   "&:hover button": {
     opacity: 1,
+  },
+  [sizes.down("lg")]: {
+    width: "25%",
+    height: showingFullPalette ? "20%" : "33.3333%",
+  },
+  [sizes.down("md")]: {
+    width: "50%",
+    height: showingFullPalette ? "10%" : "20%",
+  },
+  [sizes.down("xs")]: {
+    width: "100%",
+    height: showingFullPalette ? "5%" : "10%",
   },
 }));
 
@@ -77,7 +90,7 @@ export const CopyOverlay = styled("div")(({ color, copyOverlay }) => ({
   zIndex: "0",
   width: "100%",
   height: "100%",
-  transition: "transform 0.8s ease-in",
+  transition: "transform 0.6s ease-in",
   transform: "scale(0.1)",
   background: color,
 
@@ -112,6 +125,9 @@ export const CopyMessage = styled("div")(({ copyOverlay }) => ({
     marginBottom: "0",
     padding: "1rem",
     textTransform: "uppercase",
+    [sizes.down("xs")]: {
+      fontSize: "6rem",
+    },
   },
   "& p": {
     fontSize: "2rem",

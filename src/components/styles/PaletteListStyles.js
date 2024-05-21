@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+import sizes from "./sizes";
 import bg from "./bg.svg";
 
 export const Root = styled("div")({
@@ -22,6 +23,12 @@ export const Container = styled("div")({
   alignItems: "flex-start",
   flexDirection: "column",
   flexWrap: "wrap",
+  [sizes.down("xl")]: {
+    width: "80%",
+  },
+  [sizes.down("xs")]: {
+    width: "75%",
+  },
 });
 
 export const Nav = styled("nav")({

@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+import sizes from "./sizes";
 
 export const Root = styled("div")({
   height: "100vh",
@@ -18,7 +19,7 @@ export const GoBack = styled("div")({
   display: "inline-block",
   position: "relative",
   cursor: "pointer",
-  marginBottom: "-3.5px",
+  marginBottom: "-4px",
   opacity: 1,
   backgroundColor: "black",
   "& a": {
@@ -39,5 +40,17 @@ export const GoBack = styled("div")({
     textTransform: "uppercase",
     border: "none",
     textDecoration: "none",
+  },
+  [sizes.down("lg")]: {
+    width: "25%",
+    height: "33.3333%",
+  },
+  [sizes.down("md")]: {
+    width: "50%",
+    height: "20%",
+  },
+  [sizes.down("xs")]: {
+    width: "100%",
+    height: "10%",
   },
 });

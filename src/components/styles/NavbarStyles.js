@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+import sizes from "./sizes";
 
 export const Header = styled("header")({
   display: "flex",
@@ -20,6 +21,9 @@ export const Logo = styled("div")({
     textDecoration: "none",
     color: "black",
   },
+  [sizes.down("xs")]: {
+    display: "none",
+  },
 });
 
 export const SliderContainer = styled("div")({
@@ -27,6 +31,9 @@ export const SliderContainer = styled("div")({
   margin: "0 10px",
   paddingTop: "3px",
   display: "inline-block",
+  [sizes.down("sm")]: {
+    width: "150px",
+  },
 });
 
 export const SelectContainer = styled("div")({

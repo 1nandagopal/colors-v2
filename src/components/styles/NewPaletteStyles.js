@@ -39,6 +39,7 @@ export const Main = styled("main", {
 
 export const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
+  height: "64px",
   width: "100%",
   alignItems: "center",
   padding: theme.spacing(0, 1),

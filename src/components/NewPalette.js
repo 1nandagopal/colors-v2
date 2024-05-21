@@ -52,9 +52,6 @@ export default function NewPalette({ maxColors = 20 }) {
   return (
     <Box sx={{ display: "flex" }}>
       <NewPaletteNav open={open} handleDrawerOpen={handleDrawerOpen} />
-      {/* <PaletteFormNav
-          handleSubmit={this.handleSubmit}
-        /> */}
       <Drawer variant="persistent" anchor="left" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>

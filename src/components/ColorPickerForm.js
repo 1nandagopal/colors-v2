@@ -1,9 +1,8 @@
 import React from "react";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, styled } from "@mui/material";
 import { ChromePicker } from "react-color";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import { addColor } from "../store";
 
 const StyledChromePicker = styled(ChromePicker)({
@@ -12,7 +11,7 @@ const StyledChromePicker = styled(ChromePicker)({
   marginBottom: "1rem",
 });
 
-function ColorPickerForm({ isPaletteFull }) {
+export default function ColorPickerForm({ isPaletteFull }) {
   const {
     register,
     handleSubmit,
@@ -90,5 +89,3 @@ function ColorPickerForm({ isPaletteFull }) {
     </>
   );
 }
-
-export default ColorPickerForm;

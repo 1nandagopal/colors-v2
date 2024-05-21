@@ -1,43 +1,15 @@
-import { MenuItem, Select, Slider, Snackbar } from "@mui/material";
 import React, { useState } from "react";
+import { MenuItem, Select, Slider, Snackbar } from "@mui/material";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 
-const Header = styled.header({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-start",
-  height: "6vh",
-});
+import {
+  Header,
+  Logo,
+  SliderContainer,
+  SelectContainer,
+} from "./styles/NavbarStyles";
 
-const Logo = styled.div({
-  marginRight: "15px",
-  padding: "0 13px",
-  fontSize: "22px",
-  backgroundColor: "#eceff1",
-  fontFamily: "Roboto",
-  height: "100%",
-  display: "flex",
-  alignItems: "center",
-  "& a": {
-    textDecoration: "none",
-    color: "black",
-  },
-});
-
-const SliderContainer = styled.div({
-  width: "350px",
-  margin: "0 10px",
-  paddingTop: "3px",
-  display: "inline-block",
-});
-
-const SelectContainer = styled.div({
-  marginLeft: "auto",
-  marginRight: "1rem",
-});
-
-function Navbar({
+export default function Navbar({
   colorLevel,
   updateColorLevel,
   colorFormat,
@@ -95,5 +67,3 @@ function Navbar({
     </Header>
   );
 }
-
-export default Navbar;

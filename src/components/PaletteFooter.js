@@ -1,21 +1,7 @@
 import React from "react";
-import styled from "styled-components";
+import { Footer, Emoji } from "./styles/PaletteFooterStyles";
 
-const Footer = styled.footer({
-  backgroundColor: "white",
-  height: "5vh",
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center",
-  fontWeight: "bold",
-});
-
-const Emoji = styled.span({
-  fontSize: "1.5rem",
-  margin: "0 1rem",
-});
-
-function PaletteFooter({ paletteName, emoji }) {
+export default function PaletteFooter({ paletteName, emoji }) {
   return (
     <Footer>
       {paletteName}
@@ -23,5 +9,3 @@ function PaletteFooter({ paletteName, emoji }) {
     </Footer>
   );
 }
-
-export default PaletteFooter;

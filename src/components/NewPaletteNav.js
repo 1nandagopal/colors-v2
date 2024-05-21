@@ -1,50 +1,16 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Toolbar,
   Button,
   CssBaseline,
   IconButton,
   Typography,
-  styled,
   Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import MuiAppBar from "@mui/material/AppBar";
-import { Link } from "react-router-dom";
-import { DEFAULT_WIDTH } from "../colorHelpers";
 import NewPaletteFormDialog from "./NewPaletteFormDialog";
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  height: "64px",
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${DEFAULT_WIDTH}px)`,
-    marginLeft: `${DEFAULT_WIDTH}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const NavButtons = styled("div")({
-  display: "flex",
-  justifyContent: "space-between",
-  margin: "1rem",
-  gap: "1rem",
-  "& a": {
-    textDecoration: "none",
-  },
-});
+import { AppBar, NavButtons } from "./styles/NewPaletteNavStyles";
 
 export default function NewPaletteNav({ open, handleDrawerOpen }) {
   const [newPaletteFormOpen, toggleNewPaletteForm] = useState(false);

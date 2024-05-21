@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Controller, useForm } from "react-hook-form";
-import { Box, IconButton } from "@mui/material";
-import { EmojiEmotions } from "@mui/icons-material";
 import Picker from "@emoji-mart/react";
+import { Controller, useForm } from "react-hook-form";
+import { EmojiEmotions } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { addPalette } from "../store";
 import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Box,
+  IconButton,
+} from "@mui/material";
 
 export default function NewPaletteFormDialog({
   newPaletteFormOpen,

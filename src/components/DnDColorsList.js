@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   DndContext,
   MouseSensor,
@@ -6,13 +7,12 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { useDispatch, useSelector } from "react-redux";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
-import styled from "styled-components";
 import DnDColorBox from "./DnDColorBox";
 import { updatePalette } from "../store";
+import { styled } from "@mui/material";
 
-const Grid = styled.div({
+const Grid = styled("div")({
   height: "100%",
   overflow: "hidden",
   display: "grid",
@@ -23,6 +23,7 @@ const Grid = styled.div({
 export default function DnDColorsList() {
   const colors = useSelector((state) => state.customPalette);
   const dispatch = useDispatch();
+
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: { distance: 7 },
@@ -31,7 +32,6 @@ export default function DnDColorsList() {
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
-
     if (over && active.id !== over?.id) {
       const oldIndex = colors.findIndex((color) => color.name === active.id);
       const newIndex = colors.findIndex((color) => color.name === over.id);
@@ -40,20 +40,18 @@ export default function DnDColorsList() {
   };
 
   return (
-    <>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <Grid>
-          <SortableContext items={colors.map((color) => color.name)}>
-            {colors.map((color) => (
-              <DnDColorBox key={color.name} {...color} />
-            ))}
-          </SortableContext>
-        </Grid>
-      </DndContext>
-    </>
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+    >
+      <Grid>
+        <SortableContext items={colors.map((color) => color.name)}>
+          {colors.map((color) => (
+            <DnDColorBox key={color.name} {...color} />
+          ))}
+        </SortableContext>
+      </Grid>
+    </DndContext>
   );
 }

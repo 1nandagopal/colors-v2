@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   Dialog,
@@ -7,52 +9,11 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
 import MiniPalette from "./MiniPalette";
 import { deletePalette } from "../store";
-import { Link } from "react-router-dom";
+import { Root, Nav, Container, H1, Palettes } from "./styles/PaletteListStyles";
 
-const Root = styled.div({
-  height: "100vh",
-  display: "flex",
-  alignItems: "flex-start",
-  justifyContent: "center",
-});
-
-const H1 = styled.h1({
-  fontSize: "2rem",
-});
-
-const Container = styled.div({
-  width: "75%",
-  display: "flex",
-  alignItems: "flex-start",
-  flexDirection: "column",
-  flexWrap: "wrap",
-});
-
-const Nav = styled.nav({
-  display: "flex",
-  width: "100%",
-  justifyContent: "space-between",
-  alignItems: "center",
-  // color: "white",
-  "& a": {
-    // color: "white",
-    textDecoration: "none",
-  },
-});
-
-const Palettes = styled.div({
-  boxSizing: "border-box",
-  width: "100%",
-  display: "grid",
-  gridTemplateColumns: "repeat(4, 22.5%)",
-  gridGap: "2.5rem",
-});
-
-function PaletteList() {
+export default function PaletteList() {
   const [isDeleteDialogOpen, toggleDeleteDialog] = useState(false);
   const [deleteId, setDeleteId] = useState("");
 
@@ -111,5 +72,3 @@ function PaletteList() {
     </Root>
   );
 }
-
-export default PaletteList;

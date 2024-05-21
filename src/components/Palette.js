@@ -1,24 +1,13 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import Navbar from "./Navbar";
 import { useSelector } from "react-redux";
+import Navbar from "./Navbar";
 import PaletteFooter from "./PaletteFooter";
-import { generatePalette } from "../colorHelpers";
 import ColorBox from "./ColorBox";
+import { Root, Colors } from "./styles/PaletteStyles";
+import { generatePalette } from "../colorHelpers";
 
-const Root = styled.div({
-  height: "100vh",
-  display: "flex",
-  flexDirection: "column",
-  overflow: "hidden",
-});
-
-const Colors = styled.div({
-  height: "90%",
-});
-
-function Palette() {
+export default function Palette() {
   const { paletteId } = useParams();
 
   const [colorLevel, setColorLevel] = useState(500);
@@ -62,5 +51,3 @@ function Palette() {
     </Root>
   );
 }
-
-export default Palette;

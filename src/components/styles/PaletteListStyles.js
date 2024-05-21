@@ -1,10 +1,15 @@
 import { styled } from "@mui/material";
+import bg from "./bg.svg";
 
 export const Root = styled("div")({
   height: "100vh",
   display: "flex",
   alignItems: "flex-start",
   justifyContent: "center",
+
+  /* background by SVGBackgrounds.com */
+  backgroundImage: `url(${bg})`,
+  overflowY: "scroll",
 });
 
 export const H1 = styled("h1")({
@@ -24,9 +29,9 @@ export const Nav = styled("nav")({
   width: "100%",
   justifyContent: "space-between",
   alignItems: "center",
-  // color: "white",
+  color: "white",
   "& a": {
-    // color: "white",
+    color: "white",
     textDecoration: "none",
   },
 });

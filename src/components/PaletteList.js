@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,6 +16,7 @@ import { Root, Nav, Container, H1, Palettes } from "./styles/PaletteListStyles";
 export default function PaletteList() {
   const [isDeleteDialogOpen, toggleDeleteDialog] = useState(false);
   const [deleteId, setDeleteId] = useState("");
+  const paletteName = useRef("");
 
   const dispatch = useDispatch();
 
@@ -28,6 +29,9 @@ export default function PaletteList() {
   const openDeleteDialog = (id) => {
     toggleDeleteDialog(true);
     setDeleteId(id);
+    paletteName.current = palettes.find(
+      (palette) => palette.id === id
+    )?.paletteName;
   };
 
   const handleDelete = () => {
@@ -57,9 +61,7 @@ export default function PaletteList() {
         <DialogTitle>Delete Palette</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete{" "}
-            {palettes.find((palette) => palette.id === deleteId)?.paletteName}{" "}
-            palette?
+            Are you sure you want to delete {paletteName.current} palette?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

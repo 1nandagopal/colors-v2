@@ -40,13 +40,23 @@ export const Nav = styled("nav")({
   "& a": {
     color: "white",
     textDecoration: "none",
+    textAlign: "right",
   },
 });
 
 export const Palettes = styled("div")({
   boxSizing: "border-box",
   width: "100%",
+  overflow: "hidden",
   display: "grid",
-  gridTemplateColumns: "repeat(4, 22.5%)",
+  gridTemplateColumns: "repeat(4, 1fr)",
   gridGap: "2.5rem",
+  [sizes.down("md")]: {
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gridGap: "1.5rem",
+  },
+  [sizes.down("xs")]: {
+    gridTemplateColumns: "1fr",
+    gridGap: "1rem",
+  },
 });
